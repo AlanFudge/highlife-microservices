@@ -1,0 +1,3 @@
+[submodule "apps/view-online-jobs-widget"]
+	path = apps/view-online-jobs-widget
+	url = git@github.com:DaxHarley/view-online-jobs-widget.git
