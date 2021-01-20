@@ -13,19 +13,18 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(noCache());
 
+const getOnlineJobs = require("./utilities/getOnlineJobs");
 
-const getOnlineJobs = require("./utilities/getOnlineJobs.js");
-const generateView = require("./utilities/generateView.js");
 
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-        "Access-Control-Allow-Methods",
-        "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-    );
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    next();
-});
+// app.use((req, res, next) => {
+//     res.setHeader("Access-Control-Allow-Origin", "*");
+//     res.setHeader(
+//         "Access-Control-Allow-Methods",
+//         "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+//     );
+//     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//     next();
+// });
 
 app.get("/api/:serverId", async (req, res) => {
     const jobsResponse = await getOnlineJobs("https://servers.fivem.net/servers/detail/" + req.params.serverId);
@@ -33,10 +32,10 @@ app.get("/api/:serverId", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    res.sendFile(process.cwd() + "/apps/view-online-jobs-widget/build/index.html");
+    res.sendFile(process.cwd() + "/apps/onlineJobsBuild/index.html");
 });
 
-app.use("/", express.static(process.cwd() + "/apps/view-online-jobs-widget/build"));
+app.use("/", express.static(process.cwd() + "/apps/onlineJobsBuild"));
 
 
 app.listen(process.env.PORT, () => {
